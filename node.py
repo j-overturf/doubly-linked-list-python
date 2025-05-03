@@ -7,7 +7,7 @@ class Node:
     after = None
     element = None
 
-    def __init__(self, element, before=None, after=None):
+    def __init__(self, element=None, before=None, after=None):
         """
         Creates a new Node object.
         :param element: Element that is inside the Node.

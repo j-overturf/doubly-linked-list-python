@@ -1,0 +1,268 @@
+import math
+
+
+class DoublyLinkedList:
+    """
+    An implementation of the Doubly Linked List in Python.
+    A doubly linked list is a linked list which can modify the head and tail of the linked list.
+    """
+
+    # Internal state
+    head = None
+    tail = None
+    length = 0
+
+    def __init__(self):
+        """
+        Constructs a new Doubly Linked List structure.
+        """
+        self.head = None
+        self.tail = None
+        self.length = 0
+
+    def append(self, node):
+        """
+        Appends a new node to the end of the Doubly Linked List.
+        :param node: The new Node to be added to the end.
+        """
+
+        # Before appending, check the state of the list
+        # If the head is None then there are no elements
+        if self.head is None:
+            self.head = node
+            self.tail = node
+        else:
+            # Ensure structure completeness, the current tail must now attach to the new tail and vice versa
+            current = self.tail
+            current.set_after(node)
+            node.set_before(current)
+
+            # New tail
+            self.tail = node
+
+        # Increment size of list
+        self.length += 1
+
+    def prepend(self, node):
+        """
+        Appends a new node to the start of the Doubly Linked List.
+        :param node: The new Node to be added to the front.
+        """
+        # Before appending, check the state of the list
+        # If the head is None then there are no elements
+        if self.head is None:
+            self.head = node
+            self.tail = node
+        else:
+            # Ensure structure completeness, the current head must now attach to the new head and vice versa
+            current = self.head
+            current.set_before(node)
+            node.set_after(current)
+
+            # New tail
+            self.head = node
+
+        # Increment size of list
+        self.length += 1
+
+    def insert(self, node, index):
+        """
+        Inserts a node at a specific index of the Doubly Linked List.
+        :param node: The node to be inserted.
+        :param index: The index to insert the node at.
+        """
+        # Check if the index is not greater than size and is not 0
+        if index < 0 or index > self.size():
+            raise IndexError("Index out of bounds")
+
+        # If the index is at 0 or the tail then call the correct methods for this action
+        if index == 0:
+            self.prepend(node)
+        elif index == self.size():
+            self.append(node)
+        else:
+            # Determine best starting place based on current size
+            middle = math.floor(self.size() / 2)
+            current = None
+            # If the middle is greater than or equal to the index then start at the head
+            if middle >= index:
+                current = self.head
+                # Iterate through list until desired index is reached
+                for i in range(index):
+                    current = current.get_after()
+            else:
+                current = self.tail
+                # Iterate through list until desired index is reached
+                for i in range(index):
+                    current = current.get_before()
+
+            # Add new node between current and current's after node
+            node.set_before(current)
+            node.set_after(current.get_after())
+
+            current.get_after().set_before(node)
+            current.set_after(node)
+
+        # Increment size
+        self.length += 1
+
+    def size(self):
+        """
+        Returns the size of the Doubly Linked List.
+        :return: Size of the Doubly Linked List.
+        """
+        return self.length
+
+    def clear(self):
+        """
+        Clears the nodes of out of the Doubly Linked List.
+        """
+        # Clear the list by dropping the head and tail
+        # The rest of the nodes will be garbage collected
+        self.head = None
+        self.tail = None
+        self.length = 0
+
+    def empty(self):
+        """
+        Checks if the Doubly Linked List is empty.
+        :return: True if the Doubly Linked List is empty.
+        """
+        empty = False
+
+        # True if the size is 0
+        if self.size() == 0:
+            empty = True
+
+        return empty
+
+    def contains(self, element):
+        """
+        Checks if the Doubly Linked List contains an element.
+        :param element: The element to check for.
+        :return: True if the element is inside the Doubly Linked List
+        """
+        contain = False
+
+        # Iterate through Doubly Linked List starting at the head, until the current is none
+        current = self.head
+        while current is not None:
+            # Check current's element
+            if current.get_element() == element:
+                contain = True
+                # Turn current to None to avoid iterating through the rest of the list.
+                current = None
+
+        return contain
+
+    def get(self, element):
+        """
+        Returns the Node containing a specific element in the Doubly Linked List.
+        :return: The Node containing the element.
+        """
+        node = None
+
+        # Iterate through Doubly Linked List starting at the head, until the current is none
+        current = self.head
+        while current is not None:
+            # Check current's element
+            if current.get_element() == element:
+                node = current
+                # Turn current to None to avoid iterating through the rest of the list.
+                current = None
+
+        return node
+
+    def pop(self):
+        """
+        Removes the first Node in the Doubly Linked List.
+        """
+        # Adjust the Node's internal state
+        current = self.head
+        before = current.get_after()
+        current.set_after(None)
+
+        # Check if the before exists, if it does not then we are dealing with the tail
+        if before is not None:
+            before.set_before(None)
+        else:
+            self.tail = None
+
+        # Swap the head
+        self.head = before
+
+        # Adjust size
+        self.length -= 1
+
+    def pop_back(self):
+        """
+        Removes the last Node in the Doubly Linked List.
+        """
+        # Adjust the Node's internal state
+        current = self.tail
+        before = current.get_before()
+        current.set_before(None)
+
+        # Check if the before exists, if it does not then we are dealing with the head
+        if before is not None:
+            before.set_after(None)
+        else:
+            self.head = None
+
+        # Swap the tail
+        self.tail = before
+
+        # Adjust size
+        self.length -= 1
+
+    def remove(self, index):
+        """
+        Removes a Node of the Doubly Linked List at a specific index and returns the Node.
+        :param index: The index to remove the Node at.
+        :return: The removed Node.
+        """
+        removed = None
+        # Check if the index is not greater than size and is not 0
+        if index < 0 or index > self.size():
+            raise IndexError("Index out of bounds")
+
+        # If the index is at 0 or the tail then call the correct methods for this action
+        if index == 0:
+            removed = self.head
+            self.pop()
+        elif index == self.size():
+            removed = self.tail
+            self.pop_back()
+        else:
+            # Determine best starting place based on current size
+            middle = math.floor(self.size() / 2)
+            current = None
+            # If the middle is greater than or equal to the index then start at the head
+            if middle >= index:
+                current = self.head
+                # Iterate through list until desired index is reached
+                for i in range(index):
+                    current = current.get_after()
+            else:
+                current = self.tail
+                # Iterate through list until desired index is reached
+                for i in range(index):
+                    current = current.get_before()
+
+            # Adjust the internal state of the current's before and after and return the current
+            before = current.get_before()
+            after = current.get_after()
+
+            before.set_after(after)
+            after.set_before(before)
+
+            current.set_before(None)
+            current.set_after(None)
+
+            removed = current
+
+        # Adjust size
+        self.length -= 1
+
+        # Return the removed node
+        return removed

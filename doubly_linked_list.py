@@ -77,6 +77,10 @@ class DoublyLinkedList:
         if index < 0 or index > self.size():
             raise IndexError("Index out of bounds")
 
+        # Node cannot be anything other than a node object
+        if not isinstance(node, Node):
+            raise TypeError("Is not a node")
+
         # If the index is at 0 or the tail then call the correct methods for this action
         if index == 0:
             self.prepend(node)

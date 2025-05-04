@@ -178,6 +178,8 @@ class DoublyLinkedList:
                 node = current
                 # Turn current to None to avoid iterating through the rest of the list.
                 current = None
+            else:
+                current = current.get_after()
 
         return node
 

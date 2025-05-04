@@ -2,10 +2,6 @@ class Node:
     """
     Node object for Linked List structure.
     """
-    # Internal state
-    before = None
-    after = None
-    element = None
 
     def __init__(self, element=None, before=None, after=None):
         """

@@ -6,12 +6,6 @@ class DoublyLinkedList:
     An implementation of the Doubly Linked List in Python.
     A doubly linked list is a linked list which can modify the head and tail of the linked list.
     """
-
-    # Internal state
-    head = None
-    tail = None
-    length = 0
-
     def __init__(self):
         """
         Constructs a new Doubly Linked List structure.
@@ -266,3 +260,18 @@ class DoublyLinkedList:
 
         # Return the removed node
         return removed
+
+    def head(self):
+        """
+        Returns the head of the Doubly Linked List.
+        :return: The head of the Doubly Linked List.
+        """
+        return self.head
+
+    def tail(self):
+        """
+        Returns the tail of the Doubly Linked List.
+        :return: The tail of the Doubly Linked List.
+        """
+        return self.tail
+    

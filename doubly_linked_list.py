@@ -73,7 +73,6 @@ class DoublyLinkedList:
         :param node: The node to be inserted.
         :param index: The index to insert the node at.
         """
-        current = None
         # Check if the index is not greater than size and is not 0
         if index < 0 or index > self.size() - 1:
             raise IndexError("Index out of bounds")
@@ -92,7 +91,7 @@ class DoublyLinkedList:
             if middle >= index:
                 current = self.head
                 # Iterate through list until desired index is reached
-                for i in range(index-1):
+                for i in range(index):
                     current = current.get_after()
             else:
                 current = self.tail
@@ -187,6 +186,10 @@ class DoublyLinkedList:
         """
         Removes the first Node in the Doubly Linked List.
         """
+        # Pop only if the linked list is not empty
+        if self.size() == 0:
+            raise IndexError("Doubly linked list is empty")
+
         # Adjust the Node's internal state
         current = self.head
         before = current.get_after()
@@ -208,6 +211,10 @@ class DoublyLinkedList:
         """
         Removes the last Node in the Doubly Linked List.
         """
+        # Pop only if the linked list is not empty
+        if self.size() == 0:
+            raise IndexError("Doubly linked list is empty")
+
         # Adjust the Node's internal state
         current = self.tail
         before = current.get_before()
@@ -233,20 +240,19 @@ class DoublyLinkedList:
         """
         removed = None
         # Check if the index is not greater than size and is not 0
-        if index < 0 or index > self.size():
+        if index < 0 or index > self.size() - 1:
             raise IndexError("Index out of bounds")
 
         # If the index is at 0 or the tail then call the correct methods for this action
         if index == 0:
             removed = self.head
             self.pop()
-        elif index == self.size():
+        elif index == self.size() - 1:
             removed = self.tail
             self.pop_back()
         else:
             # Determine best starting place based on current size
             middle = math.floor(self.size() / 2)
-            current = None
             # If the middle is greater than or equal to the index then start at the head
             if middle >= index:
                 current = self.head
@@ -255,9 +261,14 @@ class DoublyLinkedList:
                     current = current.get_after()
             else:
                 current = self.tail
+                # Calculate index for this operation to function correctly
+                new_index = (self.size() - 1) - index
                 # Iterate through list until desired index is reached
-                for i in range(index):
+                for i in range(new_index + 1):
                     current = current.get_before()
+
+            # Adjust size
+            self.length -= 1
 
             # Adjust the internal state of the current's before and after and return the current
             before = current.get_before()
@@ -270,9 +281,6 @@ class DoublyLinkedList:
             current.set_after(None)
 
             removed = current
-
-        # Adjust size
-        self.length -= 1
 
         # Return the removed node
         return removed
@@ -290,4 +298,28 @@ class DoublyLinkedList:
         :return: The tail of the Doubly Linked List.
         """
         return self.tail
+
+    def __str__(self):
+        """
+        Returns a string of all the nodes based on linkage.
+        :return: String of all nodes based on linkage.
+        """
+        output = ""
+        current = self.head
+
+        # Traverse entire list
+        for i in range(self.size()-1):
+            # Modify output based on after status
+            if current.get_after() is not None:
+                output += " - "
+                output += str(current.get_element())
+            else:
+                output += str(current.get_element())
+                output += " - "
+
+            # Adjust current
+            current = current.get_after()
+
+        # Return the list string
+        return output
     

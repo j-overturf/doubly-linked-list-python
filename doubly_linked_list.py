@@ -158,13 +158,15 @@ class DoublyLinkedList:
                 contain = True
                 # Turn current to None to avoid iterating through the rest of the list.
                 current = None
+            else:
+                current = current.get_after()
 
         return contain
 
     def get(self, element):
         """
-        Returns the Node containing a specific element in the Doubly Linked List.
-        :return: The Node containing the element.
+        Returns the first Node containing a specific element in the Doubly Linked List.
+        :return: The first Node containing the element.
         """
         node = None
 

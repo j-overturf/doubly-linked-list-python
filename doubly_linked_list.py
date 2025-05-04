@@ -1,4 +1,5 @@
 import math
+from node import *
 
 
 class DoublyLinkedList:
@@ -19,6 +20,9 @@ class DoublyLinkedList:
         Appends a new node to the end of the Doubly Linked List.
         :param node: The new Node to be added to the end.
         """
+        # Node cannot be anything other than a node object
+        if not isinstance(node, Node):
+            raise TypeError("Is not a node")
 
         # Before appending, check the state of the list
         # If the head is None then there are no elements
@@ -42,6 +46,10 @@ class DoublyLinkedList:
         Appends a new node to the start of the Doubly Linked List.
         :param node: The new Node to be added to the front.
         """
+        # Node cannot be anything other than a node object
+        if not isinstance(node, Node):
+            raise TypeError("Is not a node")
+
         # Before appending, check the state of the list
         # If the head is None then there are no elements
         if self.head is None:
@@ -261,14 +269,14 @@ class DoublyLinkedList:
         # Return the removed node
         return removed
 
-    def head(self):
+    def get_head(self):
         """
         Returns the head of the Doubly Linked List.
         :return: The head of the Doubly Linked List.
         """
         return self.head
 
-    def tail(self):
+    def get_tail(self):
         """
         Returns the tail of the Doubly Linked List.
         :return: The tail of the Doubly Linked List.

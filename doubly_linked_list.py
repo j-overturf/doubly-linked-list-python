@@ -91,7 +91,7 @@ class DoublyLinkedList:
             if middle >= index:
                 current = self.head
                 # Iterate through list until desired index is reached
-                for i in range(index):
+                for i in range(index-1):
                     current = current.get_after()
             else:
                 current = self.tail

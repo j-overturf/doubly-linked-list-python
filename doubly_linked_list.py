@@ -307,18 +307,17 @@ class DoublyLinkedList:
         output = ""
         current = self.head
 
-        # Traverse entire list
-        for i in range(self.size()-1):
-            # Modify output based on after status
-            if current.get_after() is not None:
-                output += " - "
-                output += str(current.get_element())
-            else:
-                output += str(current.get_element())
-                output += " - "
+        output += str(current.get_element())
 
+        # Traverse entire list
+        for i in range(self.size()):
             # Adjust current
             current = current.get_after()
+
+            # Modify output based on after status
+            if current is not None:
+                output += " - "
+                output += str(current.get_element())
 
         # Return the list string
         return output

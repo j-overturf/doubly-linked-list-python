@@ -16,8 +16,8 @@ class NodeUnitTests(unittest.TestCase):
 
         # Check internal state
         self.assertIsNone(new.get_element(), None)
-        self.assertIsNone(new.get_before(), None)
-        self.assertIsNone(new.get_after(), None)
+        self.assertIsNone(new.get_previous(), None)
+        self.assertIsNone(new.get_next(), None)
 
     def test_ctor_elementParam(self):
         """
@@ -28,8 +28,8 @@ class NodeUnitTests(unittest.TestCase):
 
         # Check internal state
         self.assertTrue(new.get_element(), "hello")
-        self.assertIsNone(new.get_before(), None)
-        self.assertIsNone(new.get_after(), None)
+        self.assertIsNone(new.get_previous(), None)
+        self.assertIsNone(new.get_next(), None)
 
     def test_ctor_elementAndBeforeParam(self):
         """
@@ -41,8 +41,8 @@ class NodeUnitTests(unittest.TestCase):
 
         # Check internal state
         self.assertTrue(new.get_element(), "hello")
-        self.assertTrue(new.get_before(), before)
-        self.assertIsNone(new.get_after(), None)
+        self.assertTrue(new.get_previous(), before)
+        self.assertIsNone(new.get_next(), None)
 
     def test_ctor_allParams(self):
         """
@@ -55,8 +55,8 @@ class NodeUnitTests(unittest.TestCase):
 
         # Check internal state
         self.assertTrue(new.get_element(), "hello")
-        self.assertTrue(new.get_before(), before)
-        self.assertTrue(new.get_after(), after)
+        self.assertTrue(new.get_previous(), before)
+        self.assertTrue(new.get_next(), after)
 
     def test_get_element(self):
         """
@@ -92,7 +92,7 @@ class NodeUnitTests(unittest.TestCase):
         before = Node(8, new)
 
         # Check assertion
-        self.assertTrue(before.get_before(), new)
+        self.assertTrue(before.get_previous(), new)
 
     def test_set_before(self):
         """
@@ -103,10 +103,10 @@ class NodeUnitTests(unittest.TestCase):
         new = Node(10)
         before = Node(8)
 
-        before.set_before(new)
+        before.set_previous(new)
 
         # Check assertion
-        self.assertTrue(before.get_before(), new)
+        self.assertTrue(before.get_previous(), new)
 
     def test_get_after(self):
         """
@@ -117,10 +117,10 @@ class NodeUnitTests(unittest.TestCase):
         new = Node(10)
         before = Node(8)
 
-        before.set_after(new)
+        before.set_next(new)
 
         # Check assertion
-        self.assertTrue(before.get_after(), new)
+        self.assertTrue(before.get_next(), new)
 
     def test_set_after(self):
         """
@@ -131,10 +131,10 @@ class NodeUnitTests(unittest.TestCase):
         new = Node(10)
         before = Node(8)
 
-        before.set_after(new)
+        before.set_next(new)
 
         # Check assertion
-        self.assertTrue(before.get_after(), new)
+        self.assertTrue(before.get_next(), new)
 
 
 if __name__ == '__main__':

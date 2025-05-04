@@ -3,17 +3,17 @@ class Node:
     Node object for Doubly Linked List structure.
     """
 
-    def __init__(self, element=None, before=None, after=None):
+    def __init__(self, element=None, previous=None, next=None):
         """
         Creates a new Node object.
         :param element: Element that is inside the Node.
-        :param before: Node that comes before this Node.
-        :param after: Node that comes after this Node.
+        :param previous: Node that comes before this Node.
+        :param next: Node that comes after this Node.
         """
         # Set internal state
         self.element = element
-        self.before = before
-        self.after = after
+        self.previous = previous
+        self.next = next
 
     def get_element(self):
         """
@@ -29,30 +29,30 @@ class Node:
         """
         self.element = element
 
-    def get_before(self):
+    def get_previous(self):
         """
         Gets the Node before this Node.
         :return: The Node before this Node.
         """
-        return self.before
+        return self.previous
 
-    def set_before(self, before):
+    def set_previous(self, previous):
         """
         Sets a New Node before this Node.
-        :param before: The new Node before this Node.
+        :param previous: The new Node before this Node.
         """
-        self.before = before
+        self.previous = previous
 
-    def get_after(self):
+    def get_next(self):
         """
         Gets the Node after this Node.
         :return: The Node after this Node.
         """
-        return self.after
+        return self.next
 
-    def set_after(self, after):
+    def set_next(self, next):
         """
         Sets a new Node after this Node.
-        :param after: The new Node after this Node.
+        :param next: The new Node after this Node.
         """
-        self.after = after
+        self.next = next

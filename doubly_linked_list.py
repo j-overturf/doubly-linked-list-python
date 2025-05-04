@@ -32,8 +32,8 @@ class DoublyLinkedList:
         else:
             # Ensure structure completeness, the current tail must now attach to the new tail and vice versa
             current = self.tail
-            current.set_after(node)
-            node.set_before(current)
+            current.set_next(node)
+            node.set_previous(current)
 
             # New tail
             self.tail = node
@@ -58,8 +58,8 @@ class DoublyLinkedList:
         else:
             # Ensure structure completeness, the current head must now attach to the new head and vice versa
             current = self.head
-            current.set_before(node)
-            node.set_after(current)
+            current.set_previous(node)
+            node.set_next(current)
 
             # New tail
             self.head = node
@@ -92,21 +92,21 @@ class DoublyLinkedList:
                 current = self.head
                 # Iterate through list until desired index is reached
                 for i in range(index-1):
-                    current = current.get_after()
+                    current = current.get_next()
             else:
                 current = self.tail
                 # Calculate index for this operation to function correctly
                 new_index = (self.size() - 1) - index
                 # Iterate through list until desired index is reached
                 for i in range(new_index + 1):
-                    current = current.get_before()
+                    current = current.get_previous()
 
             # Add new node between current and current's after node
-            node.set_before(current)
-            node.set_after(current.get_after())
+            node.set_previous(current)
+            node.set_next(current.get_next())
 
-            current.get_after().set_before(node)
-            current.set_after(node)
+            current.get_next().set_previous(node)
+            current.set_next(node)
 
             # Increment size
             self.length += 1
@@ -158,7 +158,7 @@ class DoublyLinkedList:
                 # Turn current to None to avoid iterating through the rest of the list.
                 current = None
             else:
-                current = current.get_after()
+                current = current.get_next()
 
         return contain
 
@@ -178,7 +178,7 @@ class DoublyLinkedList:
                 # Turn current to None to avoid iterating through the rest of the list.
                 current = None
             else:
-                current = current.get_after()
+                current = current.get_next()
 
         return node
 
@@ -192,12 +192,12 @@ class DoublyLinkedList:
 
         # Adjust the Node's internal state
         current = self.head
-        before = current.get_after()
-        current.set_after(None)
+        before = current.get_next()
+        current.set_next(None)
 
         # Check if the before exists, if it does not then we are dealing with the tail
         if before is not None:
-            before.set_before(None)
+            before.set_previous(None)
         else:
             self.tail = None
 
@@ -217,12 +217,12 @@ class DoublyLinkedList:
 
         # Adjust the Node's internal state
         current = self.tail
-        before = current.get_before()
-        current.set_before(None)
+        before = current.get_previous()
+        current.set_previous(None)
 
         # Check if the before exists, if it does not then we are dealing with the head
         if before is not None:
-            before.set_after(None)
+            before.set_next(None)
         else:
             self.head = None
 
@@ -258,27 +258,27 @@ class DoublyLinkedList:
                 current = self.head
                 # Iterate through list until desired index is reached
                 for i in range(index):
-                    current = current.get_after()
+                    current = current.get_next()
             else:
                 current = self.tail
                 # Calculate index for this operation to function correctly
                 new_index = (self.size() - 1) - index
                 # Iterate through list until desired index is reached
                 for i in range(new_index + 1):
-                    current = current.get_before()
+                    current = current.get_previous()
 
             # Adjust size
             self.length -= 1
 
             # Adjust the internal state of the current's before and after and return the current
-            before = current.get_before()
-            after = current.get_after()
+            before = current.get_previous()
+            after = current.get_next()
 
-            before.set_after(after)
-            after.set_before(before)
+            before.set_next(after)
+            after.set_previous(before)
 
-            current.set_before(None)
-            current.set_after(None)
+            current.set_previous(None)
+            current.set_next(None)
 
             removed = current
 
@@ -312,7 +312,7 @@ class DoublyLinkedList:
         # Traverse entire list
         for i in range(self.size()):
             # Adjust current
-            current = current.get_after()
+            current = current.get_next()
 
             # Modify output based on after status
             if current is not None:

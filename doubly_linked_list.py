@@ -5,7 +5,7 @@ from node import *
 class DoublyLinkedList:
     """
     An implementation of the Doubly Linked List in Python.
-    A doubly linked list is a linked list which can modify the head and tail of the linked list.
+    A doubly linked list is a linked list where the nodes in the list known the previous and next node in the list.
     """
     def __init__(self):
         """

@@ -73,33 +73,33 @@ class DoublyLinkedList:
         :param node: The node to be inserted.
         :param index: The index to insert the node at.
         """
+        current = None
         # Check if the index is not greater than size and is not 0
-        if index < 0 or index > self.size():
+        if index < 0 or index > self.size() - 1:
             raise IndexError("Index out of bounds")
 
         # Node cannot be anything other than a node object
         if not isinstance(node, Node):
             raise TypeError("Is not a node")
 
-        # If the index is at 0 or the tail then call the correct methods for this action
+        # If the index is at 0 then call the correct method for this action
         if index == 0:
             self.prepend(node)
-        elif index == self.size():
-            self.append(node)
         else:
             # Determine best starting place based on current size
             middle = math.floor(self.size() / 2)
-            current = None
             # If the middle is greater than or equal to the index then start at the head
             if middle >= index:
                 current = self.head
                 # Iterate through list until desired index is reached
-                for i in range(index):
+                for i in range(index-1):
                     current = current.get_after()
             else:
                 current = self.tail
+                # Calculate index for this operation to function correctly
+                new_index = (self.size() - 1) - index
                 # Iterate through list until desired index is reached
-                for i in range(index):
+                for i in range(new_index + 1):
                     current = current.get_before()
 
             # Add new node between current and current's after node
@@ -109,8 +109,8 @@ class DoublyLinkedList:
             current.get_after().set_before(node)
             current.set_after(node)
 
-        # Increment size
-        self.length += 1
+            # Increment size
+            self.length += 1
 
     def size(self):
         """

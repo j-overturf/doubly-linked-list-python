@@ -1,6 +1,6 @@
 class Node:
     """
-    Node object for Linked List structure.
+    Node object for Doubly Linked List structure.
     """
 
     def __init__(self, element=None, before=None, after=None):
